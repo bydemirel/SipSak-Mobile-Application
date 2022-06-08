@@ -174,37 +174,42 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
           ),
           Expanded(
             flex: 3,
-            child: ListView(
-              addAutomaticKeepAlives: false,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              children: [
-                for (var i = 0; i < restaurantTitleList.length; i = i + 2) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BestRestaurantItem(
-                        title: restaurantTitleList[i],
-                        rate: rateList[i],
-                        imagePath: imagePathList[i],
-                        isFreeDelivery: isDeliveryFreeList[i],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: BestRestaurantItem(
-                          title: restaurantTitleList[i + 1],
-                          rate: rateList[i + 1],
-                          imagePath: imagePathList[i + 1],
-                          isFreeDelivery: isDeliveryFreeList[i + 1],
+            child: SizedBox(
+              height: 65,
+              child: ListView(
+                addAutomaticKeepAlives: false,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                children: [
+                  for (var i = 0;
+                      i < restaurantTitleList.length;
+                      i = i + 2) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BestRestaurantItem(
+                          title: restaurantTitleList[i],
+                          rate: rateList[i],
+                          imagePath: imagePathList[i],
+                          isFreeDelivery: isDeliveryFreeList[i],
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: BestRestaurantItem(
+                            title: restaurantTitleList[i + 1],
+                            rate: rateList[i + 1],
+                            imagePath: imagePathList[i + 1],
+                            isFreeDelivery: isDeliveryFreeList[i + 1],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ],

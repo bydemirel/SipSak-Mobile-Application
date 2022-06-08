@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       ),
       home: SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: _pageList[_selectedIndex],
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
