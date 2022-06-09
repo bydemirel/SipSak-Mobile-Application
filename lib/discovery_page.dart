@@ -1,4 +1,5 @@
 import 'package:courier_page/restaurant_page.dart';
+import 'package:courier_page/restaurants_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -166,9 +167,16 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                 for (var i = 0; i < titleList.length; i++) ...[
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        currentIndex = i;
-                      });
+                      setState(
+                        () {
+                          currentIndex = i;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RestaurantsPage()),
+                          );
+                        },
+                      );
                     },
                     child: CategoryListElement(
                       title: titleList[i],

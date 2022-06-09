@@ -40,103 +40,107 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 200,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
-            image: DecorationImage(
-              image: AssetImage("assets/images/kırçiçeği.jpg"),
-              fit: BoxFit.cover,
-              opacity: 0.4,
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+              image: DecorationImage(
+                image: AssetImage("assets/images/kırçiçeği.jpg"),
+                fit: BoxFit.cover,
+                opacity: 0.4,
+              ),
             ),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: IconButton(
-                        splashRadius: 20,
-                        alignment: Alignment.bottomLeft,
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 28,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: IconButton(
+                          splashRadius: 20,
+                          alignment: Alignment.bottomLeft,
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Text(
-                      "Türk Yemekleri",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 36,
-                          fontWeight: FontWeight.w600),
-                    )
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 15),
-        Expanded(
-          child: ListView(
-            addAutomaticKeepAlives: false,
-            shrinkWrap: true,
-            cacheExtent: 100,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              for (var i = 0; i < 4; i++) ...[
-                RestaurantsRow(
-                    rate: rateList[i],
-                    resName: resNameList[i],
-                    isFav: isFavoriteList[i],
-                    func: () {
-                      setState(() {
-                        isFavoriteList[i] = !isFavoriteList[i];
-                      });
-                    },
-                    func2: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RestaurantPage()),
-                      );
-                    }),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 0.5,
-                  indent: 20,
-                  endIndent: 20,
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Türk Yemekleri",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 36,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
                 ),
               ],
-            ],
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 15),
+          Expanded(
+            child: ListView(
+              addAutomaticKeepAlives: false,
+              shrinkWrap: true,
+              cacheExtent: 100,
+              physics: const BouncingScrollPhysics(),
+              children: [
+                for (var i = 0; i < 4; i++) ...[
+                  RestaurantsRow(
+                      rate: rateList[i],
+                      resName: resNameList[i],
+                      isFav: isFavoriteList[i],
+                      func: () {
+                        setState(() {
+                          isFavoriteList[i] = !isFavoriteList[i];
+                        });
+                      },
+                      func2: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RestaurantPage()),
+                        );
+                      }),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 0.5,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
