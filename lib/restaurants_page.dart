@@ -1,3 +1,4 @@
+import 'package:courier_page/restaurant_page.dart';
 import 'package:flutter/material.dart';
 
 import 'constant.dart';
@@ -110,15 +111,21 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
             children: [
               for (var i = 0; i < 4; i++) ...[
                 RestaurantsRow(
-                  rate: rateList[i],
-                  resName: resNameList[i],
-                  isFav: isFavoriteList[i],
-                  func: () {
-                    setState(() {
-                      isFavoriteList[i] = !isFavoriteList[i];
-                    });
-                  },
-                ),
+                    rate: rateList[i],
+                    resName: resNameList[i],
+                    isFav: isFavoriteList[i],
+                    func: () {
+                      setState(() {
+                        isFavoriteList[i] = !isFavoriteList[i];
+                      });
+                    },
+                    func2: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RestaurantPage()),
+                      );
+                    }),
                 const Divider(
                   color: Colors.grey,
                   thickness: 0.5,
@@ -137,6 +144,7 @@ class _RestaurantsPageState extends State<RestaurantsPage> {
 class RestaurantsRow extends StatelessWidget {
   final String? rate;
   final VoidCallback? func;
+  final VoidCallback? func2;
   final String? resName;
   final bool? isFav;
 
@@ -146,6 +154,7 @@ class RestaurantsRow extends StatelessWidget {
     this.resName,
     this.isFav,
     this.func,
+    this.func2,
   }) : super(key: key);
 
   @override
@@ -158,112 +167,115 @@ class RestaurantsRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    "assets/images/kırçiçeği.jpg",
-                    height: 95,
+            GestureDetector(
+              onTap: func2,
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      "assets/images/kırçiçeği.jpg",
+                      height: 95,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.star,
-                              color: Colors.yellow[600],
-                              size: 20,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              rate!,
-                              style: const TextStyle(
-                                  color: kOrderPageTextColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 6),
-                        child: Text(
-                          resName!,
-                          style: const TextStyle(
-                              color: kOrderPageTextColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            color: Colors.grey[400],
-                          ),
-                          SizedBox(
-                            width: size.width * 0.4,
-                            child: Text(
-                              "Bornova, Kazım Dirik Mahallesi",
-                              style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontWeight: FontWeight.w400),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            height: 20,
-                            width: 110,
-                            decoration: BoxDecoration(
-                              color: kOrderPageButtonColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "Ücretsiz Teslimat",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.star,
+                                color: Colors.yellow[600],
+                                size: 20,
                               ),
                             ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                rate!,
+                                style: const TextStyle(
+                                    color: kOrderPageTextColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6),
+                          child: Text(
+                            resName!,
+                            style: const TextStyle(
+                                color: kOrderPageTextColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Colors.grey[400],
+                            ),
+                            SizedBox(
+                              width: size.width * 0.4,
+                              child: Text(
+                                "Bornova, Kazım Dirik Mahallesi",
+                                style: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontWeight: FontWeight.w400),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Container(
+                              height: 20,
+                              width: 110,
+                              decoration: BoxDecoration(
+                                color: kOrderPageButtonColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Ücretsiz Teslimat",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.topCenter,

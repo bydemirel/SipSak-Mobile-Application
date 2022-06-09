@@ -32,10 +32,7 @@ class _MyAppState extends State<MyApp> {
   final _pageList = const [
     CourierPage(),
     ProductPage(),
-    MenuPage(),
-    OrderPage(),
     RestaurantsPage(),
-    RestaurantPage(),
     DiscoveryPage(),
     FiltersPage(),
   ];
@@ -83,18 +80,6 @@ class _MyAppState extends State<MyApp> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.pages),
                 label: 'V',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.pages),
-                label: 'VI',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.pages),
-                label: 'VII',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.pages),
-                label: 'VIII',
               ),
             ],
             currentIndex: _selectedIndex,

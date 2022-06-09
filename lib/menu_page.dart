@@ -1,3 +1,4 @@
+import 'package:courier_page/order_page.dart';
 import 'package:flutter/material.dart';
 
 import 'constant.dart';
@@ -161,129 +162,161 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: IconButton(
-                    splashRadius: 20,
-                    alignment: Alignment.bottomLeft,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: kOrderPageTextColor,
-                      size: 28,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: IconButton(
+                      splashRadius: 20,
+                      alignment: Alignment.bottomLeft,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: kOrderPageTextColor,
+                        size: 28,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Text(
-                  "Menü",
-                  style: TextStyle(
-                      color: kOrderPageTextColor,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600),
-                )
               ],
             ),
-          ),
-          SizedBox(
-            height: 62,
-            width: double.infinity,
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              children: [
-                for (var i = 0; i < 7; i++) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
-                    child: GestureDetector(
-                      child: Container(
-                        width: 104,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            dishCategoryList[i],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: i == _currentTabIndex
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontWeight: i == _currentTabIndex
-                                  ? FontWeight.w500
-                                  : FontWeight.w300,
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Menü",
+                    style: TextStyle(
+                        color: kOrderPageTextColor,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 62,
+              width: double.infinity,
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  for (var i = 0; i < 7; i++) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      child: GestureDetector(
+                        child: Container(
+                          width: 104,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              dishCategoryList[i],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: i == _currentTabIndex
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: i == _currentTabIndex
+                                    ? FontWeight.w500
+                                    : FontWeight.w300,
+                              ),
                             ),
                           ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: i == _currentTabIndex
+                                ? kOrderPageButtonColor
+                                : Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: i == _currentTabIndex
-                              ? kOrderPageButtonColor
-                              : Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
+                        onTap: () {
+                          setState(() {
+                            _currentTabIndex = i;
+                          });
+                        },
                       ),
-                      onTap: () {
-                        setState(() {
-                          _currentTabIndex = i;
-                        });
-                      },
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                for (var i = 0; i < 4; i++) ...[
-                  getPage(_currentTabIndex, i),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                  const Divider(
-                    color: Colors.grey,
-                    thickness: 0.5,
-                    indent: 0,
-                    endIndent: 0,
-                  ),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                ],
-              ],
+            const SizedBox(
+              height: 15,
             ),
-          ),
-        ],
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: const ScrollBehavior().copyWith(
+                  overscroll: false,
+                ),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (var i = 0; i < 4; i++) ...[
+                      getPage(_currentTabIndex, i),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      const Divider(
+                        color: Colors.grey,
+                        thickness: 0.5,
+                        indent: 0,
+                        endIndent: 0,
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+              child: FlatButton(
+                minWidth: double.infinity,
+                height: 50,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OrderPage()),
+                  );
+                },
+                child: const Text(
+                  "Ödemeye Geç",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                ),
+                color: kOrderPageButtonColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

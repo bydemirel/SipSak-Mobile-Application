@@ -1,3 +1,4 @@
+import 'package:courier_page/restaurant_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -60,6 +61,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
     "assets/images/TurkishBreakfast.jpg",
     "assets/images/Soup.jpg",
   ];
+
+  var currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -161,9 +164,18 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
               scrollDirection: Axis.horizontal,
               children: [
                 for (var i = 0; i < titleList.length; i++) ...[
-                  CategoryListElement(
-                    title: titleList[i],
-                    svgPath: svgPathList[i],
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        currentIndex = i;
+                      });
+                    },
+                    child: CategoryListElement(
+                      title: titleList[i],
+                      svgPath: svgPathList[i],
+                      currentIndex: currentIndex,
+                      index: i,
+                    ),
                   ),
                 ],
               ],
@@ -236,82 +248,90 @@ class BestRestaurantItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
-      child: Container(
-        height: 230,
-        width: 155.5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.black,
-          image: DecorationImage(
-            image: AssetImage(imagePath!),
-            fit: BoxFit.cover,
-            opacity: 0.55,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RestaurantPage()),
+          );
+        },
+        child: Container(
+          height: 230,
+          width: 155.5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(imagePath!),
+              fit: BoxFit.cover,
+              opacity: 0.55,
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              isFreeDelivery!
-                  ? Container(
-                      height: 25,
-                      width: 105,
-                      decoration: BoxDecoration(
-                        color: kOrderPageButtonColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Ücretsiz Teslimat",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                isFreeDelivery!
+                    ? Container(
+                        height: 25,
+                        width: 105,
+                        decoration: BoxDecoration(
+                          color: kOrderPageButtonColor,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                      ),
-                    )
-                  : Container(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title!,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        rate!,
-                        style: const TextStyle(
+                        child: const Center(
+                          child: Text(
+                            "Ücretsiz Teslimat",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title!,
+                      style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.white,
+                          size: 18,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          rate!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -319,16 +339,26 @@ class BestRestaurantItem extends StatelessWidget {
   }
 }
 
-class CategoryListElement extends StatelessWidget {
+class CategoryListElement extends StatefulWidget {
   final String? title;
   final String? svgPath;
+  final int? currentIndex;
+  final int index;
 
-  const CategoryListElement({
+  CategoryListElement({
     Key? key,
     this.title,
     this.svgPath,
+    required this.index,
+    this.currentIndex,
   }) : super(key: key);
 
+  @override
+  State<CategoryListElement> createState() => _CategoryListElementState();
+}
+
+class _CategoryListElementState extends State<CategoryListElement> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -338,7 +368,9 @@ class CategoryListElement extends StatelessWidget {
         width: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: widget.currentIndex == widget.index
+              ? kOrderPageButtonColor
+              : Colors.white,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -354,12 +386,23 @@ class CategoryListElement extends StatelessWidget {
           children: [
             Center(
               child: SvgPicture.asset(
-                svgPath!,
+                widget.svgPath!,
+                color: widget.currentIndex == widget.index
+                    ? Colors.white
+                    : Colors.black,
                 height: 50,
                 width: 50,
               ),
             ),
-            Center(child: Text(title!)),
+            Center(
+                child: Text(
+              widget.title!,
+              style: TextStyle(
+                color: widget.currentIndex == widget.index
+                    ? Colors.white
+                    : Colors.black,
+              ),
+            )),
           ],
         ),
       ),

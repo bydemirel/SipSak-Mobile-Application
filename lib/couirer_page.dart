@@ -1,6 +1,7 @@
 import 'package:courier_page/constant.dart';
 import 'package:flutter/material.dart';
-//import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart';
+
 
 class CourierPage extends StatefulWidget {
   const CourierPage({Key? key}) : super(key: key);
@@ -58,12 +59,12 @@ class _CourierPageState extends State<CourierPage> {
           const SizedBox(
             height: 15,
           ),
-          /*SizedBox(
+          SizedBox(
             height: size.height * 0.5,
             width: size.width * 1.5,
             child: Lottie.network(
                 'https://assets10.lottiefiles.com/packages/lf20_3ls8a1y5.json'),
-          ),*/
+          ),
           const SizedBox(
             height: 15,
           ),
